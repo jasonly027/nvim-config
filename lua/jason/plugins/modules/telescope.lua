@@ -17,7 +17,23 @@ M.keys = {
     { '<leader>h',        '<cmd>Telescope help_tags<cr>',  desc = 'Help Tags' },
 }
 
+M.opts = {
+    defaults = {
+        mappings = {
+            i = {
+                ["<Tab>"] = "move_selection_previous",
+                ["<S-Tab>"] = "move_selection_next",
+            },
+            n = {
+                ["<Tab>"] = "move_selection_previous",
+                ["<S-Tab>"] = "move_selection_next",
+            }
+        }
+    }
+}
+
 M.config = function()
+    require('telescope').setup(M.opts)
     require('telescope').load_extension('fzf')
 end
 
