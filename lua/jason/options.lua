@@ -5,8 +5,6 @@ vim.g.maplocalleader = ' '
 -- Set Options
 local opt = vim.opt
 opt.backup = false
-opt.clipboard = "unnamedplus"
-opt.cmdheight = 1
 opt.completeopt = { "menuone", "noselect" }
 opt.conceallevel = 0
 opt.fileencoding = "utf-8"
