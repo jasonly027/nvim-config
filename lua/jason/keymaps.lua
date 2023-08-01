@@ -35,6 +35,9 @@ map("n", "<C-_>", [[:vs | vertical resize 80 | :startinsert | terminal ]], { des
 -- Toggle relative line number
 map("n", "<leader>=", "<cmd>set invrelativenumber<cr>")
 
+-- Yank to system clipboard
+map("n", "<leader>Y", [["+Y]])
+
 -- Substitute word under cursor everywhere in file
 map("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Substitute word under cursor" })
 
@@ -94,6 +97,9 @@ map("t", "<esc>", [[<C-\><C-n><cmd>q!<cr>]])
 
 
 --- MULTIPLE MODES ---
+
+-- Yank to system clipboard
+map({ "n", "v" }, "<leader>y", [["+y]])
 
 -- Save File
 map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
