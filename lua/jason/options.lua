@@ -6,6 +6,9 @@ vim.g.maplocalleader = ' '
 local opt = vim.opt
 opt.backup = false
 opt.completeopt = { "menuone", "noselect" }
+if vim.fn.has("win32") == 1 then
+    opt.clipboard = "unnamedplus"
+end
 opt.conceallevel = 0
 opt.fileencoding = "utf-8"
 opt.hlsearch = true
