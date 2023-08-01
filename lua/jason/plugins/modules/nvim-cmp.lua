@@ -3,9 +3,6 @@ local M = {
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
         { 'hrsh7th/cmp-buffer' },
-        { 'hrsh7th/cmp-path' },
-        { 'hrsh7th/cmp-cmdline' },
-        { 'FelipeLema/cmp-async-path' },
         -- Snippets
         { 'L3MON4D3/LuaSnip' },
         { 'saadparwaiz1/cmp_luasnip' },
@@ -68,13 +65,6 @@ local M = {
                         return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
                     end
                 },
-                {
-                    name = 'buffer',
-                    entry_filter = function(entry, ctx)
-                        return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
-                    end
-                },
-                { name = 'async_path' },
 
                 { name = 'luasnip' },
             },
@@ -86,7 +76,7 @@ local M = {
                     vim_item.menu = ({
                         buffer = "Buffer",
                         nvim_lsp = "LSP",
-                        luasnip = "",
+                        luasnip = "Snippet",
                         nvim_lua = "Lua",
                         latex_symbols = "LaTeX",
                     })[entry.source.name]
@@ -102,19 +92,6 @@ local M = {
             sources = {
                 { name = 'buffer' }
             }
-        })
-        cmp.setup.cmdline(':', {
-            mapping = cmp.mapping.preset.cmdline(),
-            sources = cmp.config.sources({
-                { name = 'async_path' }
-            }, {
-                {
-                    name = 'cmdline',
-                    option = {
-                        ignore_cmds = { 'Man', '!', 'term', 'terminal' }
-                    }
-                }
-            })
         })
     end
 }

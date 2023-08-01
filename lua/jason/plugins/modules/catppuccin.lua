@@ -5,7 +5,7 @@ local M = {
 M.config = function()
     require("catppuccin").setup({
         flavour = "frappe",
-        transparent_background = false,
+        transparent_background = vim.g.transparent_enabled,
         custom_highlights = function(colors)
             return {
                 LineNr = { fg = colors.lavender },

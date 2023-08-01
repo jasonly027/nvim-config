@@ -6,7 +6,8 @@ M.config = function()
     require("notify").setup({
         render = "minimal",
         stages = "fade",
-        top_down = false
+        top_down = false,
+        background_colour = "#000000",
     })
     vim.notify = require('notify')
 end
