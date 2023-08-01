@@ -30,7 +30,7 @@ map("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move line(s) up" })
 map("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move line(s) down" })
 
 -- Open vertical split terminal
-map("n", "<C-_>", [[:vs | vertical resize 80 | :startinsert | terminal ]], { desc = "Vertical split terminal" })
+map("n", "<C-_>", [[:vs | vertical resize 80 | :startinsert | terminal ./]], { desc = "Vertical split terminal" })
 
 -- Toggle relative line number
 map("n", "<leader>=", "<cmd>set invrelativenumber<cr>")
