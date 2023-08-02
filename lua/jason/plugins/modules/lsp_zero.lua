@@ -26,10 +26,6 @@ local M = {
         config = function()
             local lsp = require('lsp-zero')
 
-            lsp.on_attach(function(client, bufnr)
-                lsp.buffer_autoformat()
-            end)
-
             local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
             require("mason-lspconfig").setup_handlers {
                 function(server_name)
