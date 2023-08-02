@@ -1,6 +1,6 @@
 local M = {
     "nvim-neo-tree/neo-tree.nvim",
-    event = "VeryLazy",
+    lazy = false,
     branch = "v3.x",
     dependencies = {
         "MunifTanjim/nui.nvim",
@@ -21,7 +21,7 @@ M.opts = {
         },
     },
     filesystem = {
-        hijack_netrw_behavior = "disabled",
+        hijack_netrw_behavior = "open_current",
     },
     window = {
         width = 30,
