@@ -4,15 +4,17 @@ local M = {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v2.x',
         lazy = true,
-        opts = {
-            name = 'minimal',
-            set_lsp_keymaps = {
-                preserve_mappings = true,
-                omit = {
-                    'gr', -- Unbinded in favor of Trouble's references
+        config = function()
+            require('lsp-zero.settings').preset({
+                name = 'minimal',
+                set_lsp_keymaps = {
+                    preserve_mappings = true,
+                    omit = {
+                        'gr',
+                    },
                 },
-            },
-        },
+            })
+        end ,
     },
     -- LSP
     {
