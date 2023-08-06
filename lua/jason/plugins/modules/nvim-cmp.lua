@@ -2,7 +2,6 @@ local M = {
     'hrsh7th/nvim-cmp',
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
-        { 'hrsh7th/cmp-buffer' },
         -- Snippets
         { 'L3MON4D3/LuaSnip' },
         { 'saadparwaiz1/cmp_luasnip' },
@@ -87,7 +86,6 @@ local M = {
                     vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
                     -- Sources
                     vim_item.menu = ({
-                        buffer = "Buffer",
                         nvim_lsp = "LSP",
                         luasnip = "Snippet",
                         nvim_lua = "Lua",
@@ -99,12 +97,6 @@ local M = {
             completion = {
                 keyword_length = 2,
             },
-        })
-        cmp.setup.cmdline('/', {
-            mapping = cmp.mapping.preset.cmdline(),
-            sources = {
-                { name = 'buffer' }
-            }
         })
     end
 }
