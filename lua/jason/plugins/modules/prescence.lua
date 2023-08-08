@@ -9,7 +9,7 @@ M.opts = {
     git_commit_text     = "Committing changes",
     plugin_manager_text = "Managing plugins",
     reading_text        = "Reading a file",
-    workspace_text      = "",
+    enable_line_number  = true,
 }
 
 return M
