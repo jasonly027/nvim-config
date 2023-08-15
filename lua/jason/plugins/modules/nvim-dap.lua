@@ -7,10 +7,6 @@ local M = {
     dependencies = {
         {
             'rcarriga/nvim-dap-ui',
-            -- keys = {
-            --     { '<leader>db', '<cmd>DapToggleBreakpoint<cr>', desc = 'Toggle breakpoint' },
-            --     { '<F5>',       '<cmd>DapContinue<cr>',         desc = 'Start or continue debugger' },
-            -- },
             config = function()
                 local dap, dapui = require("dap"), require("dapui")
                 dapui.setup()

@@ -22,6 +22,9 @@ M.opts = {
     },
     filesystem = {
         hijack_netrw_behavior = "open_current",
+        follow_current_file = {
+            enabled = true,
+        }
     },
     window = {
         width = 30,

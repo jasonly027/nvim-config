@@ -79,9 +79,6 @@ map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move line(s) up" })
 map("v", "<", "<gv^", { desc = "Shift line left" })
 map("v", ">", ">gv^", { desc = "Shift line right" })
 
--- Replace selection with yanked
-map("x", "<leader>p", "\"_dP")
-
 
 
 --- TERMINAL ---

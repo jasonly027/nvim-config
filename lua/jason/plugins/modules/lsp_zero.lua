@@ -14,7 +14,7 @@ local M = {
                     },
                 },
             })
-        end ,
+        end,
     },
     -- LSP
     {
@@ -24,6 +24,12 @@ local M = {
         dependencies = {
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'williamboman/mason-lspconfig.nvim' },
+            {
+                "folke/neodev.nvim",
+                opts = {
+                    library = { plugins = { "nvim-dap-ui" }, types = true },
+                },
+            }
         },
         config = function()
             local lsp = require('lsp-zero')
@@ -35,6 +41,17 @@ local M = {
                         capabilities = lsp_capabilities
                     }
                 end,
+                ['lua_ls'] = function()
+                    require('lspconfig').lua_ls.setup({
+                        settings = {
+                            Lua = {
+                                workspace = {
+                                    checkThirdParty = false,
+                                }
+                            }
+                        }
+                    })
+                end
             }
 
             lsp.setup()
