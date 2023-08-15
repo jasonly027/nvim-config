@@ -15,12 +15,13 @@ M.config = function()
         dim_inactive = {
             enabled = true,
             shade = "dark",
-            percentage = 0.15,
+            percentage = 0.10,
         },
         integrations = {
             mason = true,
             telescope = {
                 enabled = true,
+                style = 'nvchad',
             },
             native_lsp = {
                 enabled = true,
@@ -40,10 +41,20 @@ M.config = function()
                     background = true,
                 },
             },
+            dap = {
+                enabled = true,
+                enable_ui = true,
+            },
             treesitter = true,
             cmp = true,
             notify = true,
             neotree = true,
+            indent_blankline = {
+                enabled = true,
+            },
+            lsp_trouble = true,
+            dashboard = true,
+            leap = true,
         }
     })
     vim.cmd.colorscheme("catppuccin")
