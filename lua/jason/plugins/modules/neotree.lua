@@ -62,6 +62,7 @@ M.opts = {
     },
     filesystem = {
         hijack_netrw_behavior = "open_current",
+        group_empty_dirs = true,
         follow_current_file = true,
     },
     window = {
