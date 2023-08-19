@@ -7,21 +7,21 @@ M.opts = {
         theme = 'catppuccin',
         globalstatus = true,
         component_separators = '|',
-        section_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
         disabled_filetypes = {
             'lazy',
         }
     },
     sections = {
         lualine_a = {
-            { 'mode', separator = { left = '' }, right_padding = 2 },
+            { 'mode', right_padding = 2 },
         },
         lualine_b = { 'filename', 'branch' },
-        lualine_c = { 'diagnostics' },
-        lualine_x = { 'b:gitsigns_status' },
+        lualine_c = { 'b:gitsigns_status' },
+        lualine_x = { 'fileformat', 'encoding' },
         lualine_y = { 'filetype', 'progress' },
         lualine_z = {
-            { "os.date('%I:%M %p')", separator = { right = '' }, left_padding = 2 },
+            { "os.date('%I:%M %p')", left_padding = 2 },
         },
     },
     inactive_sections = {
@@ -33,5 +33,10 @@ M.opts = {
         lualine_z = { 'location' },
     },
 }
+
+M.config = function()
+    require('lualine').setup(M.opts)
+    vim.api.nvim_set_hl(0, 'lualine_c_normal', { bg = 'NONE' })
+end
 
 return M
