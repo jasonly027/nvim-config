@@ -36,7 +36,7 @@ opt.relativenumber = true
 opt.numberwidth = 4
 opt.signcolumn = "yes"
 opt.wrap = true
-opt.colorcolumn = "80"
+-- opt.colorcolumn = "80"
 opt.scrolloff = 8
 opt.sidescrolloff = 8
 opt.shortmess:append "c"

@@ -1,6 +1,5 @@
 local M = {
     "folke/trouble.nvim",
-
 }
 
 M.keys = {

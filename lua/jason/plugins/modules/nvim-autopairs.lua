@@ -1,7 +1,8 @@
 local M = {
     'windwp/nvim-autopairs',
     event = "InsertEnter",
-    opts = {}
 }
+
+M.config = true
 
 return M

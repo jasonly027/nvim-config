@@ -56,6 +56,16 @@ M.config = function()
             dashboard = true,
             leap = true,
             noice = true,
+            navic = {
+                enabled = true,
+                custom_bg = 'NONE',
+            },
+            barbecue = {
+                dim_dirname = true,
+                bold_basename = true,
+                dim_context = false,
+                alt_background = false,
+            },
         }
     })
     vim.cmd.colorscheme("catppuccin")

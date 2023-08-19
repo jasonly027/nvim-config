@@ -29,7 +29,7 @@ local M = {
                 opts = {
                     library = { plugins = { "nvim-dap-ui" }, types = true },
                 },
-            }
+            },
         },
         config = function()
             local lsp = require('lsp-zero')
@@ -43,6 +43,7 @@ local M = {
                 end,
                 ['lua_ls'] = function()
                     require('lspconfig').lua_ls.setup({
+                        on_attach = lsp.on_attach,
                         settings = {
                             Lua = {
                                 workspace = {

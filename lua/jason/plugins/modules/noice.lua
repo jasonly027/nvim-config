@@ -32,9 +32,6 @@ M.opts = {
             enabled = false,
         }
     },
-    messages = {
-        view = 'notify',
-    }
 }
 
 return M

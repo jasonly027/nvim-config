@@ -1,6 +1,5 @@
 local M = {
     'nvim-telescope/telescope.nvim',
-    lazy = 'VeryLazy',
     tag = '0.1.2',
     dependencies = {
         {

@@ -1,5 +1,5 @@
 local M = {
-    'ggandor/leap.nvim'
+    'ggandor/leap.nvim',
 }
 
 M.config = function ()

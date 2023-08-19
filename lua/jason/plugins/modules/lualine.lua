@@ -7,19 +7,21 @@ M.opts = {
         theme = 'catppuccin',
         globalstatus = true,
         component_separators = '|',
-        -- section_separators = '',
         section_separators = { left = '', right = '' },
+        disabled_filetypes = {
+            'lazy',
+        }
     },
     sections = {
         lualine_a = {
             { 'mode', separator = { left = '' }, right_padding = 2 },
         },
         lualine_b = { 'filename', 'branch' },
-        lualine_c = { 'fileformat' },
-        lualine_x = {},
+        lualine_c = { 'diagnostics' },
+        lualine_x = { 'b:gitsigns_status' },
         lualine_y = { 'filetype', 'progress' },
         lualine_z = {
-            { 'location', separator = { right = '' }, left_padding = 2 },
+            { "os.date('%I:%M %p')", separator = { right = '' }, left_padding = 2 },
         },
     },
     inactive_sections = {
