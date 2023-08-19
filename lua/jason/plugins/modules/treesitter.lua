@@ -6,7 +6,16 @@ local M = {
 }
 
 M.opts = {
-    ensure_installed = { "c", "lua", "vim", "vimdoc" },
+    ensure_installed = {
+        "c",
+        "lua",
+        "vim",
+        "vimdoc",
+        "regex",
+        "bash",
+        "markdown",
+        "markdown_inline"
+    },
     sync_install = false,
     auto_install = true,
     highlight = {

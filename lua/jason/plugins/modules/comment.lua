@@ -3,6 +3,8 @@ local M = {
     event = { 'BufReadPre', 'BufNewFile' },
 }
 
-M.config = true
+M.opts = {
+    ignore = '^$'
+}
 
 return M

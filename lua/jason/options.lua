@@ -45,6 +45,15 @@ vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd [[set iskeyword+=-]]
 vim.cmd [[autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o]]
 
+-- Disable line numbers in integrated terminal
+vim.api.nvim_create_autocmd('TermOpen', {
+    callback = function ()
+        vim.opt_local.number = false
+        vim.opt_local.relativenumber = false
+    end,
+    pattern = '*',
+})
+
 -- Highlight on yank
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {

@@ -11,7 +11,8 @@ M.config = function()
     require("transparent").setup({
         extra_groups = {
             'NormalFloat',
-            'NeoTreeNormal'
+            'NeoTreeNormal',
+            'TroubleNormal',
         }
     })
 end

@@ -9,7 +9,7 @@ M.config = function()
         custom_highlights = function(colors)
             return {
                 LineNr = { fg = colors.lavender },
-                ColorColumn = { bg = colors.surface1 }
+                -- ColorColumn = { bg = colors.surface1 }
             }
         end,
         dim_inactive = {
@@ -55,6 +55,7 @@ M.config = function()
             lsp_trouble = true,
             dashboard = true,
             leap = true,
+            noice = true,
         }
     })
     vim.cmd.colorscheme("catppuccin")
