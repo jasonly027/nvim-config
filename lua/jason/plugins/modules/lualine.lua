@@ -14,12 +14,15 @@ M.opts = {
     },
     sections = {
         lualine_a = {
-            { 'mode', right_padding = 2 },
+            { 'mode', separator = { right = '' }, right_padding = 2 },
         },
         lualine_b = { 'filename', 'branch' },
         lualine_c = { 'b:gitsigns_status' },
         lualine_x = { 'fileformat', 'encoding' },
-        lualine_y = { 'filetype', 'progress' },
+        lualine_y = {
+            'filetype',
+            { 'progress', separator = { right = '' } }
+        },
         lualine_z = {
             { "os.date('%I:%M %p')", left_padding = 2 },
         },
