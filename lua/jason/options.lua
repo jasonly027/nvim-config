@@ -40,6 +40,7 @@ opt.wrap = true
 opt.scrolloff = 8
 opt.sidescrolloff = 8
 opt.shortmess:append "c"
+opt.fillchars:append "eob: "
 
 vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd [[set iskeyword+=-]]
