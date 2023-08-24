@@ -55,11 +55,12 @@ local M = {
                 end
             }
 
+            local icons = require("jason.util.icons")
             lsp.set_sign_icons({
-                error = '',
-                warn = '',
-                hint = '',
-                info = ''
+                error = icons.diagnostics.error,
+                warn = icons.diagnostics.warn,
+                hint = icons.diagnostics.hint,
+                info = icons.diagnostics.info,
             })
 
             lsp.setup()

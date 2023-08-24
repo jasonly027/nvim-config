@@ -8,23 +8,30 @@ M.opts = {
         globalstatus = true,
         component_separators = '|',
         section_separators = { left = '', right = '' },
-        disabled_filetypes = {
-            'lazy',
-        }
     },
     sections = {
         lualine_a = {
-            { 'mode', separator = { right = '' }, right_padding = 2 },
+            { 'mode', right_padding = 2 },
         },
-        lualine_b = { 'filename', 'branch' },
+        lualine_b = {
+            { 'filename', separator = { left = '' } },
+            'branch',
+        },
         lualine_c = { 'diff' },
-        lualine_x = { 'fileformat', 'encoding' },
+        lualine_x = {
+            {
+                'diagnostics',
+                symbols = require('jason.util.icons').diagnostics
+            },
+            'fileformat',
+            'encoding'
+        },
         lualine_y = {
             'filetype',
-            { 'progress', separator = { right = '' } }
+            'progress',
         },
         lualine_z = {
-            { "os.date('%I:%M %p')", left_padding = 2 },
+            { "os.date('%I:%M %p')", left_padding = 2, separator = { left = '' } },
         },
     },
     inactive_sections = {

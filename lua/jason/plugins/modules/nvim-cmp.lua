@@ -77,20 +77,12 @@ local M = {
                         return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
                     end
                 },
-
                 { name = 'luasnip' },
             },
             formatting = {
                 format = function(entry, vim_item)
                     -- Kind icons
                     vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
-                    -- Sources
-                    vim_item.menu = ({
-                        nvim_lsp = "LSP",
-                        luasnip = "Snippet",
-                        nvim_lua = "Lua",
-                        latex_symbols = "LaTeX",
-                    })[entry.source.name]
                     return vim_item
                 end
             },

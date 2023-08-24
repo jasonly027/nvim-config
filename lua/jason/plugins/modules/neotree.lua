@@ -32,19 +32,7 @@ M.opts = {
         },
     },
     git_status = {
-        symbols = {
-            -- Change type
-            added     = " ✚",
-            deleted   = " ✖",
-            modified  = " ",
-            renamed   = " 󰁕",
-            -- Status type
-            untracked = " ",
-            ignored   = " ",
-            unstaged  = " 󰄱",
-            staged    = " ",
-            conflict  = " ",
-        },
+        symbols = require('jason.util.icons').git,
         align = "right",
     },
     event_handlers = {
