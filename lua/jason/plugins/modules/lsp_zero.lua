@@ -55,6 +55,13 @@ local M = {
                 end
             }
 
+            lsp.set_sign_icons({
+                error = '',
+                warn = '',
+                hint = '',
+                info = ''
+            })
+
             lsp.setup()
         end
     }

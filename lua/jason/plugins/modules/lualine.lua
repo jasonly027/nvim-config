@@ -17,7 +17,7 @@ M.opts = {
             { 'mode', separator = { right = '' }, right_padding = 2 },
         },
         lualine_b = { 'filename', 'branch' },
-        lualine_c = { 'b:gitsigns_status' },
+        lualine_c = { 'diff' },
         lualine_x = { 'fileformat', 'encoding' },
         lualine_y = {
             'filetype',
@@ -39,7 +39,6 @@ M.opts = {
 
 M.config = function()
     require('lualine').setup(M.opts)
-    vim.api.nvim_set_hl(0, 'lualine_c_normal', { bg = 'NONE' })
 end
 
 return M

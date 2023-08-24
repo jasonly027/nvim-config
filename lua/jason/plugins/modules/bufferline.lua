@@ -53,7 +53,6 @@ M.config = function()
             buffer_close_icon = false,
         },
     })
-    vim.api.nvim_set_hl(0, 'BufferLineFill', { bg = 'NONE' })
 end
 
 return M
