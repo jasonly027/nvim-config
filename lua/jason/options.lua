@@ -34,16 +34,19 @@ opt.cursorline = true
 opt.number = true
 opt.relativenumber = true
 opt.numberwidth = 4
-opt.signcolumn = "yes"
+opt.signcolumn = 'yes'
 opt.wrap = true
--- opt.colorcolumn = "80"
 opt.scrolloff = 8
 opt.sidescrolloff = 8
-opt.shortmess:append "c"
-opt.fillchars:append "eob: "
+opt.shortmess:append('c')
+opt.fillchars:append('eob: ')
+opt.spell = true
+opt.spelloptions:append('noplainbuffer')
 
 vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd [[set iskeyword+=-]]
+
+-- Disable carriage return continuing a comment
 vim.cmd [[autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o]]
 
 -- Disable line numbers in integrated terminal
