@@ -25,6 +25,9 @@ map({ "n", "t" }, "<C-Right>", "<cmd>vertical resize +3<cr>", { desc = "Increase
 map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
 map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
 
+-- Close Current Buffer
+map("n", "<leader>x", "<cmd>bd<cr>", { desc = "Close Current Buffer" })
+
 -- Move Line(s)
 map("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move line(s) up" })
 map("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move line(s) down" })
@@ -76,8 +79,8 @@ map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move line(s) down" })
 map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move line(s) up" })
 
 -- Stay in visual mode while changing indent
-map("v", "<", "<gv^", { desc = "Shift line left" })
-map("v", ">", ">gv^", { desc = "Shift line right" })
+map("v", "<", "<gv^", { desc = "Shift line left", remap = false })
+map("v", ">", ">gv^", { desc = "Shift line right", remap = false })
 
 
 

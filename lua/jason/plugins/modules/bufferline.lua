@@ -19,6 +19,8 @@ M.keys = {
     { '<leader>8', '<cmd>BufferLineGoToBuffer 8<cr>', desc = 'Go to eigth bufferline tab' },
     { '<leader>9', '<cmd>BufferLineGoToBuffer 9<cr>', desc = 'Go to ninth bufferline tab' },
     { '<leader>0', '<cmd>BufferLineGoToBuffer 0<cr>', desc = 'Go to tenth bufferline tab' },
+    { '>>', '<cmd>BufferLineMoveNext<cr>', desc = 'Move current buffer forwards' },
+    { '<<', '<cmd>BufferLineMovePrev<cr>', desc = 'Move current buffer backward' },
 }
 
 M.config = function()
