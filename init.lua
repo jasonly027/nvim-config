@@ -83,6 +83,13 @@ vim.keymap.set('n', '<C-s>', '<cmd>w<CR>')
 -- Paste without replacing register
 vim.keymap.set('x', '<leader>p', [["_dP]])
 
+-- Scroll through buffers
+vim.keymap.set('n', '<S-H>', '<cmd>bprevious<cr>')
+vim.keymap.set('n', '<S-L>', '<cmd>bnext<cr>')
+
+-- Close current buffer
+vim.keymap.set('n', '<leader>w', '<cmd>bd<cr>')
+
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',

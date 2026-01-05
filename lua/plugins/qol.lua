@@ -139,4 +139,10 @@ return {
       vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w><C-k>', { desc = 'Move focus to the upper window' })
     end,
   },
+
+  {
+    'folke/persistence.nvim',
+    event = 'BufReadPre',
+    opts = {},
+  },
 }

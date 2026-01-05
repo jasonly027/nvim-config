@@ -61,5 +61,25 @@ return {
     statusline.section_location = function()
       return '%2l:%-2v'
     end
+
+    -- Home Page
+    local starter = require 'mini.starter'
+    starter.setup {
+      items = {
+        { name = 'Restore a session', action = 'lua require("persistence").select()', section = 'Session' },
+        { name = 'Most Recent Session', action = 'lua require("persistence").load({ last = true })', section = 'Session' },
+        { name = 'Current Dir Session', action = 'lua require("persistence").load()', section = 'Session' },
+        starter.sections.recent_files(10, false),
+        starter.sections.builtin_actions(),
+      },
+      content_hooks = {
+        starter.gen_hook.adding_bullet(),
+        starter.gen_hook.indexing('all', { 'Builtin actions' }),
+        starter.gen_hook.padding(3, 2),
+      },
+    }
+
+    -- Tab Line
+    require('mini.tabline').setup()
   end,
 }
