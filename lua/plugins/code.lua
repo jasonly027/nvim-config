@@ -8,9 +8,11 @@ return {
       },
     },
   },
+
   {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
+    event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       { 'mason-org/mason.nvim', opts = {} },
       'mason-org/mason-lspconfig.nvim',
@@ -165,6 +167,20 @@ return {
 
       formatters_by_ft = {
         lua = { 'stylua' },
+
+        json = { 'prettier' },
+        yaml = { 'prettier' },
+
+        markdown = { 'prettier' },
+        html = { 'prettier' },
+        css = { 'prettier' },
+
+        javascript = { 'prettier' },
+        typescript = { 'prettier' },
+        javascriptreact = { 'prettier' },
+        typescriptreact = { 'prettier' },
+
+        vue = { 'prettier' },
       },
     },
   },

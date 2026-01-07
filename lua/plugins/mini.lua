@@ -7,8 +7,20 @@ return {
     -- Better Around/Inside textobjects
     require('mini.ai').setup { n_lines = 500 }
 
-    -- Functionality to work with ([{}])'s
-    require('mini.pairs').setup()
+    require('mini.surround').setup {
+      n_lines = 500,
+      mappings = {
+        add = 'ys',
+        delete = 'ds',
+        replace = 'cs',
+
+        find = '""',
+        find_left = '""',
+        highlight = '""',
+        suffix_last = 'l',
+        suffix_next = 'n',
+      },
+    }
 
     -- File Explorer
     require('mini.files').setup {

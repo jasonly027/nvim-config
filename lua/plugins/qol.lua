@@ -1,6 +1,4 @@
 return {
-  'tpope/vim-surround',
-
   {
     'ggandor/leap.nvim',
     lazy = false, -- Not recommended by author
