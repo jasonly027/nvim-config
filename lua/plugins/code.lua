@@ -11,18 +11,12 @@ return {
   {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
-    event = 'VimEnter',
     dependencies = {
-      -- Automatically install LSPs and related tools to stdpath for Neovim
-      -- Mason must be loaded before its dependents so we need to set it up here.
       { 'mason-org/mason.nvim', opts = {} },
       'mason-org/mason-lspconfig.nvim',
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
-
+      'saghen/blink.cmp',
       -- Status updates for LSP.
       { 'j-hui/fidget.nvim', opts = {} },
-
-      'saghen/blink.cmp',
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -33,29 +27,17 @@ return {
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          -- Rename the variable under your cursor.
-          --  Most Language Servers support renaming across files, etc.
           map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
 
-          -- Execute a code action, usually your cursor needs to be on top of an error
-          -- or a suggestion from your LSP for this to activate.
           map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
 
-          -- Find references for the word under your cursor.
           map('grr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
 
-          -- Jump to the implementation of the word under your cursor.
-          --  Useful when your language has ways of declaring types without an actual implementation.
           map('gri', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
 
-          -- Jump to the definition of the word under your cursor.
-          --  This is where a variable was first declared, or where a function is defined, etc.
-          --  To jump back, press <C-t>.
-          map('grd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+          map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
-          -- WARN: This is not Goto Definition, this is Goto Declaration.
-          --  For example, in C this would take you to the header.
-          map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+          map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
@@ -119,8 +101,6 @@ return {
         end,
       })
 
-      -- Diagnostic Config
-      -- See :help vim.diagnostic.Opts
       vim.diagnostic.config {
         severity_sort = true,
         float = { border = 'rounded', source = 'if_many' },
@@ -148,68 +128,8 @@ return {
         },
       }
 
-      -- LSP servers and clients are able to communicate to each other what features they support.
-      --  By default, Neovim doesn't support everything that is in the LSP specification.
-      --  When you add blink.cmp, luasnip, etc. Neovim now has *more* capabilities.
-      --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
-      local capabilities = require('blink.cmp').get_lsp_capabilities()
-
-      -- Enable the following language servers
-      --  Add any additional override configuration in the following tables. Available keys are:
-      --  - cmd (table): Override the default command used to start the server
-      --  - filetypes (table): Override the default list of associated filetypes for the server
-      --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-      --  - settings (table): Override the default settings passed when initializing the server.
-      --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
-      local servers = {
-        lua_ls = {
-          -- cmd = { ... },
-          -- filetypes = { ... },
-          -- capabilities = {},
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
-            },
-          },
-        },
-      }
-
-      -- Ensure the servers and tools above are installed
-      --
-      -- To check the current status of installed tools and/or manually install
-      -- other tools, you can run
-      --    :Mason
-      --
-      -- You can press `g?` for help in this menu.
-      --
-      -- `mason` had to be setup earlier: to configure its options see the
-      -- `dependencies` table for `nvim-lspconfig` above.
-      --
-      -- You can add other tools here that you want Mason to install
-      -- for you, so that they are available from within Neovim.
-      local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
-      })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
       require('mason-lspconfig').setup {
-        ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
-        automatic_installation = false,
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for ts_ls)
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
-          end,
-        },
+        ensure_installed = { 'lua_ls', 'stylua' },
       }
     end,
   },
@@ -230,10 +150,8 @@ return {
     },
     opts = {
       notify_on_error = false,
+
       format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
         local disable_filetypes = { c = true, cpp = true }
         if disable_filetypes[vim.bo[bufnr].filetype] then
           return nil
@@ -244,13 +162,9 @@ return {
           }
         end
       end,
+
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
       },
     },
   },
@@ -292,36 +206,12 @@ return {
     --- @type blink.cmp.Config
     opts = {
       keymap = {
-        -- 'default' (recommended) for mappings similar to built-in completions
-        --   <c-y> to accept ([y]es) the completion.
-        --    This will auto-import if your LSP supports it.
-        --    This will expand snippets if the LSP sent a snippet.
-        -- 'super-tab' for tab to accept
-        -- 'enter' for enter to accept
-        -- 'none' for no mappings
-        --
-        -- For an understanding of why the 'default' preset is recommended,
-        -- you will need to read `:help ins-completion`
-        --
-        -- No, but seriously. Please read `:help ins-completion`, it is really good!
-        --
-        -- All presets have the following mappings:
-        -- <tab>/<s-tab>: move to right/left of your snippet expansion
-        -- <c-space>: Open menu or open docs if already open
-        -- <c-n>/<c-p> or <up>/<down>: Select next/previous item
-        -- <c-e>: Hide menu
-        -- <c-k>: Toggle signature help
-        --
-        -- See :h blink-cmp-config-keymap for defining your own keymap
         preset = 'enter',
-
         -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
         --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
       },
 
       appearance = {
-        -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-        -- Adjusts spacing to ensure icons are aligned
         nerd_font_variant = 'mono',
       },
 
