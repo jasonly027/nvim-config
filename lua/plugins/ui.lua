@@ -12,6 +12,31 @@ return {
     end,
   },
 
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      options = {
+        globalstatus = true,
+        section_separators = '',
+        component_separators = '',
+      },
+      sections = {
+        lualine_a = { 'mode' },
+        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_c = {
+          {
+            'filename',
+            path = 1,
+          },
+        },
+        lualine_x = { 'searchcount' },
+        lualine_y = { 'encoding', 'fileformat', 'filetype' },
+        lualine_z = { 'location' },
+      },
+    },
+  },
+
   { -- Highlight todo, notes, etc in comments
     'folke/todo-comments.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
