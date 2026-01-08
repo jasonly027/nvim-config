@@ -19,7 +19,17 @@ return {
       options = {
         globalstatus = true,
         section_separators = '',
-        component_separators = '',
+        component_separators = '│',
+      },
+      tabline = {
+        lualine_a = {
+          {
+            'buffers',
+            symbols = {
+              alternate_file = '',
+            },
+          },
+        },
       },
       sections = {
         lualine_a = { 'mode' },

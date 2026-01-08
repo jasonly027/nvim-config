@@ -81,8 +81,5 @@ return {
         starter.gen_hook.padding(3, 2),
       },
     }
-
-    -- Tab Line
-    require('mini.tabline').setup()
   end,
 }
