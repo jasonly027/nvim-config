@@ -22,6 +22,15 @@ return {
       },
     }
 
+    -- Auto insert closing ]})
+    require('mini.pairs').setup {
+      mappings = {
+        ['"'] = false,
+        ["'"] = false,
+        ['`'] = false,
+      },
+    }
+
     -- File Explorer
     require('mini.files').setup {
       options = {
