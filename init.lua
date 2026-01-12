@@ -11,6 +11,8 @@ vim.o.expandtab = true
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
 
+vim.o.winborder = 'rounded'
+
 -- Enable mouse mode
 vim.o.mouse = 'a'
 

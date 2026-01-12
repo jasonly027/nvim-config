@@ -168,19 +168,19 @@ return {
       formatters_by_ft = {
         lua = { 'stylua' },
 
-        json = { 'prettier' },
-        yaml = { 'prettier' },
+        json = { 'prettierd' },
+        yaml = { 'prettierd' },
 
-        markdown = { 'prettier' },
-        html = { 'prettier' },
-        css = { 'prettier' },
+        markdown = { 'prettierd' },
+        html = { 'prettierd' },
+        css = { 'prettierd' },
 
-        javascript = { 'prettier' },
-        typescript = { 'prettier' },
-        javascriptreact = { 'prettier' },
-        typescriptreact = { 'prettier' },
+        javascript = { 'prettierd' },
+        typescript = { 'prettierd' },
+        javascriptreact = { 'prettierd' },
+        typescriptreact = { 'prettierd' },
 
-        vue = { 'prettier' },
+        vue = { 'prettierd' },
       },
     },
   },
@@ -204,15 +204,12 @@ return {
           return 'make install_jsregexp'
         end)(),
         dependencies = {
-          -- `friendly-snippets` contains a variety of premade snippets.
-          --    See the README about individual language/framework/plugin snippets:
-          --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            'rafamadriz/friendly-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+          },
         },
         opts = {},
       },
@@ -240,7 +237,7 @@ return {
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev' },
+        default = { 'lsp', 'buffer', 'path', 'snippets', 'lazydev' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
         },
@@ -255,23 +252,116 @@ return {
     },
   },
 
-  { -- Highlight, edit, and navigate code
+  {
     'nvim-treesitter/nvim-treesitter',
-    branch = 'master',
+    enabled = false, -- dd, <S-j> currently crash treesitter
+    branch = 'main',
     build = ':TSUpdate',
-    main = 'nvim-treesitter.configs', -- Sets main module to use for opts
-    opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
-      auto_install = true,
-      highlight = {
-        enable = true,
+    config = function()
+      local ts = require 'nvim-treesitter'
 
-        -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-        --  If you are experiencing weird indenting issues, add the language to
-        --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-        additional_vim_regex_highlighting = { 'ruby' },
-      },
-      indent = { enable = true, disable = { 'ruby' } },
-    },
+      -- State tracking for async parser loading
+      local parsers_loaded = {}
+      local parsers_pending = {}
+      local parsers_failed = {}
+
+      local ns = vim.api.nvim_create_namespace 'treesitter.async'
+
+      -- Helper to start highlighting and indentation
+      local function start(buf, lang)
+        local ok = pcall(vim.treesitter.start, buf, lang)
+        if ok then
+          vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end
+        return ok
+      end
+
+      -- Install core parsers after lazy.nvim finishes loading all plugins
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'LazyDone',
+        once = true,
+        callback = function()
+          ts.install({
+            'bash',
+            'c',
+            'diff',
+            'html',
+            'lua',
+            'luadoc',
+            'markdown',
+            'markdown_inline',
+            'query',
+            'vim',
+            'vimdoc',
+          }, {
+            max_jobs = 8,
+          })
+        end,
+      })
+
+      -- Decoration provider for async parser loading
+      vim.api.nvim_set_decoration_provider(ns, {
+        on_start = vim.schedule_wrap(function()
+          if #parsers_pending == 0 then
+            return false
+          end
+          for _, data in ipairs(parsers_pending) do
+            if vim.api.nvim_buf_is_valid(data.buf) then
+              if start(data.buf, data.lang) then
+                parsers_loaded[data.lang] = true
+              else
+                parsers_failed[data.lang] = true
+              end
+            end
+          end
+          parsers_pending = {}
+        end),
+      })
+
+      local group = vim.api.nvim_create_augroup('kickstart.TreesitterSetup', { clear = true })
+
+      local ignore_filetypes = {
+        'checkhealth',
+        'lazy',
+        'mason',
+        'snacks_dashboard',
+        'snacks_notif',
+        'snacks_win',
+        'fidget',
+        'toggleterm',
+        'minimap',
+        'minifiles',
+        'blink-cmp-menu',
+      }
+
+      -- Auto-install parsers and enable highlighting on FileType
+      vim.api.nvim_create_autocmd('FileType', {
+        group = group,
+        desc = 'Enable treesitter highlighting and indentation (non-blocking)',
+        callback = function(event)
+          if vim.tbl_contains(ignore_filetypes, event.match) then
+            return
+          end
+
+          local lang = vim.treesitter.language.get_lang(event.match) or event.match
+          local buf = event.buf
+
+          if parsers_failed[lang] then
+            return
+          end
+
+          if parsers_loaded[lang] then
+            -- Parser already loaded, start immediately (fast path)
+            start(buf, lang)
+          else
+            -- Queue for async loading
+            table.insert(parsers_pending, { buf = buf, lang = lang })
+          end
+
+          -- Auto-install missing parsers (async, no-op if already installed)
+          ts.install { lang }
+        end,
+      })
+    end,
   },
 }
