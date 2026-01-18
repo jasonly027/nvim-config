@@ -35,7 +35,7 @@ return {
 
           map('grr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
 
-          map('gri', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+          map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
 
           map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
@@ -334,7 +334,7 @@ return {
         'blink-cmp-menu',
         'blink-cmp-signature',
         'typescript',
-        'oil',
+        'TelescopeResults',
       }
 
       -- Auto-install parsers and enable highlighting on FileType
@@ -426,6 +426,168 @@ return {
           end
         end,
       })
+    end,
+  },
+
+  {
+    'mfussenegger/nvim-dap',
+    dependencies = {
+      -- Debugger UI
+      'rcarriga/nvim-dap-ui',
+      -- UI dep
+      'nvim-neotest/nvim-nio',
+      -- Virtual Text
+      { 'theHamsta/nvim-dap-virtual-text', opts = {} },
+
+      -- Installs the debug adapters for you
+      'mason-org/mason.nvim',
+      'jay-babu/mason-nvim-dap.nvim',
+    },
+    keys = {
+      {
+        '<F5>',
+        function()
+          require('dap').continue()
+        end,
+        desc = 'Debug: Start/Continue',
+      },
+      {
+        '<F1>',
+        function()
+          require('dap').step_into()
+        end,
+        desc = 'Debug: Step Into',
+      },
+      {
+        '<F2>',
+        function()
+          require('dap').step_over()
+        end,
+        desc = 'Debug: Step Over',
+      },
+      {
+        '<F3>',
+        function()
+          require('dap').step_out()
+        end,
+        desc = 'Debug: Step Out',
+      },
+      {
+        '<leader>b',
+        function()
+          require('dap').toggle_breakpoint()
+        end,
+        desc = 'Debug: Toggle Breakpoint',
+      },
+      {
+        '<leader>B',
+        function()
+          require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+        end,
+        desc = 'Debug: Set Breakpoint',
+      },
+      -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
+      {
+        '<F7>',
+        function()
+          require('dapui').toggle()
+        end,
+        desc = 'Debug: See last session result.',
+      },
+    },
+    config = function()
+      local dap = require 'dap'
+      local dapui = require 'dapui'
+
+      require('mason-nvim-dap').setup {
+        ensure_installed = {},
+        automatic_installation = true,
+        handlers = {},
+      }
+
+      dap.adapters['pwa-node'] = {
+        type = 'server',
+        host = 'localhost',
+        port = '${port}',
+        executable = {
+          command = 'js-debug-adapter',
+          args = { '${port}' },
+        },
+      }
+      for _, language in ipairs { 'javascript', 'typescript' } do
+        local runtimeExecutable = nil
+        if language:find 'typescript' then
+          runtimeExecutable = vim.fn.executable 'tsx' == 1 and 'tsx' or 'ts-node'
+        end
+        dap.configurations[language] = {
+          {
+            type = 'pwa-node',
+            request = 'launch',
+            name = 'Launch file',
+            program = '${file}',
+            cwd = '${workspaceFolder}',
+            sourceMaps = true,
+            runtimeExecutable = runtimeExecutable,
+            skipFiles = {
+              '<node_internals>/**',
+              'node_modules/**',
+            },
+            resolveSourceMapLocations = {
+              '${workspaceFolder}/**',
+              '!**/node_modules/**',
+            },
+          },
+          {
+            type = 'pwa-node',
+            request = 'attach',
+            name = 'Attach',
+            processId = require('dap.utils').pick_process,
+            cwd = '${workspaceFolder}',
+            sourceMaps = true,
+            runtimeExecutable = runtimeExecutable,
+            skipFiles = {
+              '<node_internals>/**',
+              'node_modules/**',
+            },
+            resolveSourceMapLocations = {
+              '${workspaceFolder}/**',
+              '!**/node_modules/**',
+            },
+          },
+        }
+      end
+
+      dapui.setup {
+        icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
+        controls = {
+          icons = {
+            pause = '',
+            play = '',
+            step_into = '',
+            step_over = '',
+            step_out = '',
+            step_back = '',
+            run_last = '',
+            terminate = '',
+            disconnect = '',
+          },
+        },
+      }
+
+      vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
+      vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
+      local breakpoint_icons = vim.g.have_nerd_font
+          and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
+        or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
+      for type, icon in pairs(breakpoint_icons) do
+        local tp = 'Dap' .. type
+        local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
+        vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
+      end
+
+      dap.listeners.after.event_initialized['dapui_config'] = dapui.open
+      dap.listeners.before.event_terminated['dapui_config'] = dapui.close
+      dap.listeners.before.event_exited['dapui_config'] = dapui.close
     end,
   },
 }

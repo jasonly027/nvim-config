@@ -78,8 +78,8 @@ return {
     local starter = require 'mini.starter'
     starter.setup {
       items = {
-        { name = 'Restore', action = 'lua require("persistence").select()', section = 'Session' },
         { name = 'Most Recent', action = 'lua require("persistence").load({ last = true })', section = 'Session' },
+        { name = 'Restore', action = 'lua require("persistence").select()', section = 'Session' },
         { name = 'Current Directory', action = 'lua require("persistence").load()', section = 'Session' },
         starter.sections.recent_files(10, false),
         starter.sections.builtin_actions(),
