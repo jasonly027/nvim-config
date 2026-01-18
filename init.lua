@@ -45,6 +45,9 @@ vim.o.timeoutlen = 300
 vim.o.splitright = true
 vim.o.splitbelow = true
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Sets how certain whitespace characters are displayed
 vim.o.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
@@ -95,6 +98,10 @@ vim.keymap.set('x', '<leader>p', [["_dP]])
 -- Scroll through buffers
 vim.keymap.set('n', '<S-H>', '<cmd>bprevious<cr>')
 vim.keymap.set('n', '<S-L>', '<cmd>bnext<cr>')
+
+-- Scroll through quickfix
+vim.keymap.set('n', '<S-A-H>', '<cmd>cprevious<cr>')
+vim.keymap.set('n', '<S-A-L>', '<cmd>cnext<cr>')
 
 -- Close current buffer
 vim.keymap.set('n', '<leader>w', '<cmd>bd<cr>')

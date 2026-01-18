@@ -131,6 +131,9 @@ return {
       vim.keymap.set('n', '<C-\\>', toggleOrInitTerm)
       vim.keymap.set('t', '<C-\\>', toggleOrInitTerm)
 
+      vim.keymap.set('n', '<leader>tv', '<cmd>TermNew direction=vertical<cr>', { desc = 'Open new [T]erminal [V]ertically' })
+      vim.keymap.set('n', '<leader>th', '<cmd>TermNew direction=horizontal<cr>', { desc = 'Open new [T]erminal [H]orizontally' })
+
       vim.keymap.set('t', '<C-h>', '<C-\\><C-n><C-w><C-h>', { desc = 'Move focus to the left window' })
       vim.keymap.set('t', '<C-l>', '<C-\\><C-n><C-w><C-l>', { desc = 'Move focus to the right window' })
       vim.keymap.set('t', '<C-j>', '<C-\\><C-n><C-w><C-j>', { desc = 'Move focus to the lower window' })
