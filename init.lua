@@ -63,8 +63,6 @@ vim.o.inccommand = 'split'
 
 vim.o.cursorline = true
 
-vim.opt.shortmess:append 'S'
-
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.o.scrolloff = 10
 
@@ -98,10 +96,6 @@ vim.keymap.set('x', '<leader>p', [["_dP]])
 -- Scroll through buffers
 vim.keymap.set('n', '<S-H>', '<cmd>bprevious<cr>')
 vim.keymap.set('n', '<S-L>', '<cmd>bnext<cr>')
-
--- Scroll through quickfix
-vim.keymap.set('n', '<S-A-H>', '<cmd>cprevious<cr>')
-vim.keymap.set('n', '<S-A-L>', '<cmd>cnext<cr>')
 
 -- Close current buffer
 vim.keymap.set('n', '<leader>w', '<cmd>bd<cr>')

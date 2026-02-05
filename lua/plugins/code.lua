@@ -229,10 +229,14 @@ return {
       },
 
       completion = {
-        -- By default, you may press `<c-space>` to show the documentation.
-        documentation = { auto_show = false, auto_show_delay_ms = 500 },
+        documentation = { auto_show = true, auto_show_delay_ms = 500 },
         menu = {
-          border = 'rounded',
+          draw = {
+            columns = {
+              { 'label', 'label_description', gap = 1 },
+              { 'kind_icon', 'kind', gap = 1 },
+            },
+          },
         },
       },
 
@@ -293,6 +297,7 @@ return {
             'query',
             'vim',
             'vimdoc',
+            'regex',
           }, {
             max_jobs = 8,
           })
@@ -333,8 +338,13 @@ return {
         'minifiles',
         'blink-cmp-menu',
         'blink-cmp-signature',
+        'blink-cmp-documentation',
         'typescript',
         'TelescopeResults',
+        'TelescopePrompt',
+        'qf',
+        'noice',
+        'notify',
       }
 
       -- Auto-install parsers and enable highlighting on FileType

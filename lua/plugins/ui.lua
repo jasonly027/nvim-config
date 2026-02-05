@@ -40,7 +40,7 @@ return {
             path = 1,
           },
         },
-        lualine_x = { 'searchcount' },
+        lualine_x = {},
         lualine_y = { 'encoding', 'fileformat', 'filetype' },
         lualine_z = { 'location' },
       },
@@ -77,15 +77,6 @@ return {
     end,
   },
 
-  { -- Smooth cursor
-    'sphamba/smear-cursor.nvim',
-    opts = {
-      stiffness = 0.5,
-      trailing_stiffness = 0.5,
-      matrix_pixel_threshold = 0.5,
-    },
-  },
-
   { -- Add indentation guides
     'lukas-reineke/indent-blankline.nvim',
     event = 'VimEnter',
@@ -111,5 +102,30 @@ return {
         },
       }
     end,
+  },
+
+  {
+    'folke/noice.nvim',
+    event = 'VeryLazy',
+    opts = {
+      lsp = {
+        override = {
+          ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+          ['vim.lsp.util.stylize_markdown'] = true,
+        },
+        hover = {
+          silent = true,
+        },
+      },
+      presets = {
+        command_palette = true,
+        long_message_to_split = true,
+        lsp_doc_border = true,
+      },
+    },
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'rcarriga/nvim-notify',
+    },
   },
 }

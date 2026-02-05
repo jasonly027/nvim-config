@@ -146,4 +146,14 @@ return {
     event = 'BufReadPre',
     opts = {},
   },
+
+  {
+    'kokusenz/deltaview.nvim',
+    keys = {
+      { '<leader>dl', desc = 'Open [D]elta [L]ist' },
+      { '<leader>dm', desc = 'Open [D]elta [M]enu' },
+      { '<leader>da', desc = 'Open [D]elt[A]' },
+    },
+    opts = {},
+  },
 }
