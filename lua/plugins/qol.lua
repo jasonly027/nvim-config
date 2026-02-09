@@ -142,9 +142,10 @@ return {
   },
 
   {
-    'folke/persistence.nvim',
-    event = 'BufReadPre',
-    opts = {},
+    'rmagatti/auto-session',
+    opts = {
+      auto_restore = false,
+    },
   },
 
   {

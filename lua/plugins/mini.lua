@@ -58,29 +58,15 @@ return {
       },
     }
 
-    -- Scroll bar
-    require('mini.map').setup {
-      window = {
-        width = 1,
-        winblend = 0,
-        show_integration_count = false,
-      },
-    }
-    vim.api.nvim_create_autocmd('BufEnter', {
-      group = vim.api.nvim_create_augroup('kickstart.MiniMap', { clear = true }),
-      once = true,
-      callback = function()
-        MiniMap.open()
-      end,
-    })
-
     -- Home Page
     local starter = require 'mini.starter'
     starter.setup {
       items = {
-        { name = 'Most Recent', action = 'lua require("persistence").load({ last = true })', section = 'Session' },
-        { name = 'Restore', action = 'lua require("persistence").select()', section = 'Session' },
-        { name = 'Current Directory', action = 'lua require("persistence").load()', section = 'Session' },
+        -- { name = 'Most Recent', action = 'lua require("persistence").load({ last = true })', section = 'Session' },
+        -- { name = 'Restore', action = 'lua require("persistence").select()', section = 'Session' },
+        -- { name = 'Current Directory', action = 'lua require("persistence").load()', section = 'Session' },
+        { name = 'Restore', action = 'AutoSession search', section = 'Session' },
+        { name = 'Current Directory', action = 'AutoSession restore', section = 'Session' },
         starter.sections.recent_files(10, false),
         starter.sections.builtin_actions(),
       },

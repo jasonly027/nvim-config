@@ -6,6 +6,10 @@ return {
       require('catppuccin').setup {
         transparent_background = true,
         auto_integrations = true,
+        float = {
+          transparent = true,
+          solid = false,
+        },
       }
 
       vim.cmd.colorscheme 'catppuccin-macchiato'
@@ -42,7 +46,7 @@ return {
         },
         lualine_x = {},
         lualine_y = { 'encoding', 'fileformat', 'filetype' },
-        lualine_z = { 'location' },
+        lualine_z = { { 'location', separator = '' }, 'progress' },
       },
     },
   },

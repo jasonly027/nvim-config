@@ -17,8 +17,6 @@ return {
       { 'mason-org/mason.nvim', opts = {} },
       'mason-org/mason-lspconfig.nvim',
       'saghen/blink.cmp',
-      -- Status updates for LSP.
-      { 'j-hui/fidget.nvim', opts = {} },
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -332,7 +330,6 @@ return {
         'snacks_dashboard',
         'snacks_notif',
         'snacks_win',
-        'fidget',
         'toggleterm',
         'minimap',
         'minifiles',
