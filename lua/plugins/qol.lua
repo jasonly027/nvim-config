@@ -1,6 +1,6 @@
 return {
   {
-    'ggandor/leap.nvim',
+    url = 'https://codeberg.org/andyg/leap.nvim',
     lazy = false, -- Not recommended by author
     keys = {
       { 's', '<Plug>(leap)', mode = { 'n', 'x', 'o' } },
@@ -138,6 +138,13 @@ return {
       vim.keymap.set('t', '<C-l>', '<C-\\><C-n><C-w><C-l>', { desc = 'Move focus to the right window' })
       vim.keymap.set('t', '<C-j>', '<C-\\><C-n><C-w><C-j>', { desc = 'Move focus to the lower window' })
       vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+      -- lock window so it's only for terminal
+      vim.api.nvim_create_autocmd('TermOpen', {
+        callback = function()
+          vim.opt_local.winfixbuf = true
+        end,
+      })
     end,
   },
 

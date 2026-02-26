@@ -42,6 +42,12 @@ return {
           {
             'filename',
             path = 1,
+            fmt = function(name, ctx)
+              if vim.bo.filetype == 'toggleterm' then
+                return 'Terminal ' .. vim.b.toggle_number
+              end
+              return name
+            end,
           },
         },
         lualine_x = {},
@@ -119,6 +125,12 @@ return {
         },
         hover = {
           silent = true,
+        },
+        signature = {
+          enabled = false,
+          auto_open = {
+            enabled = false,
+          },
         },
       },
       presets = {
