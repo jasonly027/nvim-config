@@ -50,7 +50,7 @@ return {
             end,
           },
         },
-        lualine_x = {},
+        lualine_x = { 'vim.fn.wordcount().visual_chars' },
         lualine_y = { 'encoding', 'fileformat', 'filetype' },
         lualine_z = { { 'location', separator = '' }, 'progress' },
       },
