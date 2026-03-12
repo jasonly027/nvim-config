@@ -77,8 +77,8 @@ return {
       -- Document existing key chains
       spec = {
         { '<leader>s', group = '[S]earch' },
-        { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+        { '<leader>t', group = '[T]erminal' },
+        { '<leader>d', group = '[D]elta' },
       },
     },
   },
@@ -105,7 +105,11 @@ return {
         end
       end
 
-      require('toggleterm').setup()
+      require('toggleterm').setup {
+        on_open = function()
+          vim.wo.winfixbuf = true
+        end,
+      }
 
       local function toggleOrInitTerm()
         vim.cmd [[ ToggleTermToggleAll ]]
@@ -138,13 +142,6 @@ return {
       vim.keymap.set('t', '<C-l>', '<C-\\><C-n><C-w><C-l>', { desc = 'Move focus to the right window' })
       vim.keymap.set('t', '<C-j>', '<C-\\><C-n><C-w><C-j>', { desc = 'Move focus to the lower window' })
       vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w><C-k>', { desc = 'Move focus to the upper window' })
-
-      -- lock window so it's only for terminal
-      vim.api.nvim_create_autocmd('TermOpen', {
-        callback = function()
-          vim.opt_local.winfixbuf = true
-        end,
-      })
     end,
   },
 
@@ -160,7 +157,7 @@ return {
     keys = {
       { '<leader>dl', desc = 'Open [D]elta [L]ist' },
       { '<leader>dm', desc = 'Open [D]elta [M]enu' },
-      { '<leader>da', desc = 'Open [D]elt[A]' },
+      { '<leader>da', desc = 'Open [D]elta' },
     },
     opts = {},
   },
