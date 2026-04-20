@@ -110,6 +110,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+vim.filetype.add {
+  pattern = {
+    ['docker%-compose.*%.ya?ml'] = 'yaml.docker-compose',
+    ['compose.*%.ya?ml'] = 'yaml.docker-compose',
+  },
+}
+
 -- Install `lazy.nvim` plugin manager
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
